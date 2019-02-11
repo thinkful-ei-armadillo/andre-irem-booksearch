@@ -4,9 +4,9 @@ class List extends Component {
   render() {
     return (
       <ul className="listOfBooks">
-        {this.props.books.map(book =>
+        {this.props.books.map((book, index) =>
         { return (
-          <li>
+          <li key={index}>
             <img src={book.thumbnail} />
             <h1>{book.title}</h1>
             <p>{book.authors}</p> 
