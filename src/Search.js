@@ -6,7 +6,8 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      query: ''
+      query: '',
+      books: []
     };
   }
 
@@ -30,7 +31,21 @@ class Search extends Component {
 
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${this.state.query}`)
       .then(res => res.json())
-      .then(json => console.log(json));
+      .then(json => {
+        let searchedBooks = json.items.map(item => {  
+          return {
+            thumbnail: item.volumeInfo.imageLinks.thumbnail,
+            title: item.volumeInfo.title,
+            authors: item.volumeInfo.authors,
+            printType: item.volumeInfo.printType,
+            description: item.volumeInfo.description,
+            ebook: item.saleInfo.isEbook,
+            // price: item.saleInfo.listPrice.amount
+          };
+      })
+      this.setState({books: searchedBooks});
+      this.props.handler(searchedBooks);
+    });
   };
 
   render() {

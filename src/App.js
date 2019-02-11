@@ -6,19 +6,33 @@ import List from './List';
 // import ListItem from './ListItem';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handler = this.handler.bind(this)
+    this.state = {
+      books: []
+    };
+  }
+
+  handler(searchedBooks){
+    this.setState({
+      books: searchedBooks
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <header>
           Google Book Search
         </header>
-        <Search />
+        <Search handler={this.handler}/>
         {/* 
         <Filter />
         */}
-        <List>
-          
-        </List>
+        <List books={this.state.books}/>
       </div>
     );
   }
